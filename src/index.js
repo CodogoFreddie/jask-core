@@ -1,37 +1,35 @@
-import { realiseActions, getState, } from "./chain";
-import { setProp, addTags, removeTags, } from "./actionCreators";
-import { parseArgsList, } from "./parseArgsList";
-import { actionifyModifiers, } from "./actionifyModifiers";
-import { parseDate, parseDuration, } from "./dateParsing";
+export { realiseActions, getState, } from "./chain";
+export { setProp, addTags, removeTags, } from "./actionCreators";
+export { parseArgsList, } from "./parseArgsList";
+export { actionifyModifiers, } from "./actionifyModifiers";
+export { parseDate, parseDuration, } from "./dateParsing";
 
-const { modifiers, } = parseArgsList([
-	"+filterTag",
-	"1",
-	"f9708196-b3e9-4e1b-bec3-9abb7c9fde48",
-	"modify",
-	"this",
-	"is",
-	"the",
-	"description",
-	"+addTag",
-	"-removeTag",
-	"due:2w",
-	"recur:1w",
-	"foo:bar",
-]);
+//import { realiseActions, getState, } from "./chain";
+//import { setProp, addTags, removeTags, } from "./actionCreators";
+//import { parseArgsList, } from "./parseArgsList";
+//import { actionifyModifiers, } from "./actionifyModifiers";
+//import { parseDate, parseDuration, } from "./dateParsing";
 
-const uuid = "f9708196-b3e9-4e1b-bec3-9abb7c9fde48";
-const actions = actionifyModifiers({
-	uuid,
-	modifiers,
-});
+//const { modifiers, } = parseArgsList([
+//"+filterTag",
+//"1",
+//"f9708196-b3e9-4e1b-bec3-9abb7c9fde48",
+//"modify",
+//"this",
+//"is",
+//"the",
+//"description",
+//"+addTag",
+//"-removeTag",
+//"due:2w",
+//"recur:1w",
+//"foo:bar",
+//]);
 
-realiseActions(actions);
+//const uuid = "f9708196-b3e9-4e1b-bec3-9abb7c9fde48";
+//const actions = actionifyModifiers({
+//uuid,
+//modifiers,
+//});
 
-console.log(actions, modifiers, getState());
-console.log(parseDate("2w"));
-console.log(parseDate("friday"));
-console.log(parseDate("01-02"));
-console.log(parseDate("01-02-2017"));
-console.log(parseDate("2017-01-02"));
-console.log(parseDate("22:00"));
+//realiseActions(actions);
