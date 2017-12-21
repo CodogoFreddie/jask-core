@@ -11,13 +11,13 @@ const ramdafyAction = R.when(
 );
 
 export const realiseActions = actions => {
-	actions.forEach(({ action, }) => {
+	actions.forEach(({ meta, action, }) => {
 		const oldState = R.pathOr({}, [0, "state",], chain);
 		const actionFunction = R.pipe(...action.map(ramdafyAction));
 		const state = actionFunction(oldState);
 
-		chain = [{ action, state, }, ...chain,];
+		chain = [{ action: { meta, action, }, state, }, ...chain,];
 	});
 };
 
-export const getState = () => R.head(chain).state;
+export const getState = () => R.pipe(R.head, R.propOr({}, "state"))(chain);

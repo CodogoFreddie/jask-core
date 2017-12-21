@@ -1,6 +1,6 @@
 import genUUID from "uuid/v4";
 
-export const setProp = ({ id, prop, value, }) => ({
+export const setProp = ({ uuid, prop, value, }) => ({
 	meta: {
 		timestamp: new Date().getTime(),
 		uuid: genUUID(),
@@ -8,12 +8,12 @@ export const setProp = ({ id, prop, value, }) => ({
 	action: [
 		{
 			op: "assocPath",
-			args: [[id, prop,], value,],
+			args: [[uuid, prop,], value,],
 		},
 	],
 });
 
-export const unsetProp = ({ id, prop, }) => ({
+export const unsetProp = ({ uuid, prop, }) => ({
 	meta: {
 		timestamp: new Date().getTime(),
 		uuid: genUUID(),
@@ -21,12 +21,12 @@ export const unsetProp = ({ id, prop, }) => ({
 	action: [
 		{
 			op: "dissocPath",
-			args: [[id, prop,],],
+			args: [[uuid, prop,],],
 		},
 	],
 });
 
-export const addTags = ({ id, tag, tags = [], }) => ({
+export const addTags = ({ uuid, tag, tags = [], }) => ({
 	meta: {
 		timestamp: new Date().getTime(),
 		uuid: genUUID(),
@@ -37,18 +37,27 @@ export const addTags = ({ id, tag, tags = [], }) => ({
 			args: [
 				{
 					op: "lensPath",
-					args: [[id, "tags",],],
+					args: [[uuid, "tags",],],
 				},
 				{
-					op: "union",
-					args: [[...tags, tag,].filter(Boolean),],
+					op: "pipe",
+					args: [
+						{
+							op: "defaultTo",
+							args: [[],],
+						},
+						{
+							op: "union",
+							args: [[...tags, tag,].filter(Boolean),],
+						},
+					],
 				},
 			],
 		},
 	],
 });
 
-export const removeTags = ({ id, tag, tags = [], }) => ({
+export const removeTags = ({ uuid, tag, tags = [], }) => ({
 	meta: {
 		timestamp: new Date().getTime(),
 		uuid: genUUID(),
@@ -59,15 +68,24 @@ export const removeTags = ({ id, tag, tags = [], }) => ({
 			args: [
 				{
 					op: "lensPath",
-					args: [[id, "tags",],],
+					args: [[uuid, "tags",],],
 				},
 				{
-					op: "difference",
+					op: "pipe",
 					args: [
 						{
-							op: "__",
+							op: "defaultTo",
+							args: [[],],
 						},
-						[...tags, tag,].filter(Boolean),
+						{
+							op: "difference",
+							args: [
+								{
+									op: "__",
+								},
+								[...tags, tag,].filter(Boolean),
+							],
+						},
 					],
 				},
 			],
