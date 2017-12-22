@@ -1,9 +1,23 @@
+import R from "ramda";
 import genUUID from "uuid/v4";
+
+export const mergeActions = R.reduce(
+	(acc, { meta, action, }) => ({
+		meta,
+		action: [...(acc.action || []), ...(action || []),],
+	}),
+	{},
+);
 
 export const setProp = ({ uuid, prop, value, }) => ({
 	meta: {
 		timestamp: new Date().getTime(),
-		uuid: genUUID(),
+		task: {
+			uuid,
+		},
+		action: {
+			uuid: genUUID(),
+		},
 	},
 	action: [
 		{
@@ -16,7 +30,12 @@ export const setProp = ({ uuid, prop, value, }) => ({
 export const unsetProp = ({ uuid, prop, }) => ({
 	meta: {
 		timestamp: new Date().getTime(),
-		uuid: genUUID(),
+		task: {
+			uuid,
+		},
+		action: {
+			uuid: genUUID(),
+		},
 	},
 	action: [
 		{
@@ -29,7 +48,12 @@ export const unsetProp = ({ uuid, prop, }) => ({
 export const addTags = ({ uuid, tag, tags = [], }) => ({
 	meta: {
 		timestamp: new Date().getTime(),
-		uuid: genUUID(),
+		task: {
+			uuid,
+		},
+		action: {
+			uuid: genUUID(),
+		},
 	},
 	action: [
 		{
@@ -60,7 +84,12 @@ export const addTags = ({ uuid, tag, tags = [], }) => ({
 export const removeTags = ({ uuid, tag, tags = [], }) => ({
 	meta: {
 		timestamp: new Date().getTime(),
-		uuid: genUUID(),
+		task: {
+			uuid,
+		},
+		action: {
+			uuid: genUUID(),
+		},
 	},
 	action: [
 		{

@@ -1,35 +1,56 @@
-export { realiseActions, getState, } from "./chain";
-export { setProp, addTags, removeTags, } from "./actionCreators";
-export { parseArgsList, } from "./parseArgsList";
-export { actionifyModifiers, } from "./actionifyModifiers";
-export { parseDate, parseDuration, } from "./dateParsing";
+import R from "ramda";
 
-//import { realiseActions, getState, } from "./chain";
-//import { setProp, addTags, removeTags, } from "./actionCreators";
-//import { parseArgsList, } from "./parseArgsList";
-//import { actionifyModifiers, } from "./actionifyModifiers";
-//import { parseDate, parseDuration, } from "./dateParsing";
+import { insertAction, realiseActions, getState, } from "./chain";
+import { parseArgsList, } from "./parseArgsList";
+import * as opperations from "./opperations";
 
-//const { modifiers, } = parseArgsList([
-//"+filterTag",
-//"1",
-//"f9708196-b3e9-4e1b-bec3-9abb7c9fde48",
-//"modify",
-//"this",
-//"is",
-//"the",
-//"description",
-//"+addTag",
-//"-removeTag",
-//"due:2w",
-//"recur:1w",
-//"foo:bar",
-//]);
+let listActionsHandler = () => {};
+let readActionHandler = () => {};
+let writeActionHandler = () => {};
 
-//const uuid = "f9708196-b3e9-4e1b-bec3-9abb7c9fde48";
-//const actions = actionifyModifiers({
-//uuid,
-//modifiers,
-//});
+export const setPersistHandlers = ({
+	listActions,
+	readAction,
+	writeAction,
+}) => {
+	listActionsHandler = listActions;
+	readActionHandler = R.memoizeWith(R.identity, readAction);
+	writeActionHandler = writeAction;
+};
 
-//realiseActions(actions);
+export const initaliseJask = () =>
+	listActionsHandler()
+		.then(actions => Promise.all(actions.map(readActionHandler)))
+		.then(R.sortBy(R.path(["meta", "timestamp",])))
+		.then(realiseActions);
+
+export const runQuery = query => {
+	const {
+		filter,
+		keyword,
+		modifiers,
+		filterPresent,
+		modifiersPresent,
+	} = parseArgsList(query.split(" "));
+
+	const {
+		opperationFilter,
+		opperationActionCreator,
+		returnFilter,
+	} = (opperations[keyword] || opperations.noop)({
+		filter,
+		filterPresent,
+		modifiers,
+		modifiersPresent,
+	});
+
+	const newActions = opperationActionCreator(
+		getState().filter(opperationFilter),
+	);
+
+	newActions.forEach(writeActionHandler);
+
+	newActions.forEach(insertAction);
+
+	return getState().filter(returnFilter);
+};

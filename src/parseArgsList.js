@@ -6,7 +6,7 @@ const keyworkRegex = /(add|modify|delete|done)/;
 export const parseArgsList = args => {
 	const [filter, [keyword, ...modifiers],] = R.splitWhen(
 		R.test(keyworkRegex),
-		args,
+		args.filter(R.length),
 	);
 
 	const filterPresent = !!filter.length;
