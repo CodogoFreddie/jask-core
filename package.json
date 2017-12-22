@@ -3,6 +3,9 @@
 	"version": "0.1.0",
 	"description": "The core engine for parsing, constructing, modifying, and querying jask",
 	"main": "lib/index.js",
+	"files": [
+		"lib"
+	],
 	"repository": "git@github.com:CodogoFreddie/jask-core.git",
 	"author": "Freddie Ridell <freddie@codogo.io>",
 	"license": "MIT",
