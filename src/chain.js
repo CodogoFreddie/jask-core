@@ -1,4 +1,4 @@
-import R from "ramda";
+import * as R from "ramda";
 
 const map = R.addIndex(R.map);
 

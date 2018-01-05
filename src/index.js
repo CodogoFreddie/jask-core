@@ -1,4 +1,4 @@
-import R from "ramda";
+import * as R from "ramda";
 
 import { insertAction, realiseActions, getState, } from "./chain";
 import { parseArgsList, } from "./parseArgsList";

@@ -1,4 +1,4 @@
-import R from "ramda";
+import * as R from "ramda";
 import getTime from "date-fns/fp/getTime";
 
 import { parseDate, } from "./dateParsing";

@@ -1,5 +1,5 @@
 import chrono from "chrono-node";
-import R from "ramda";
+import * as R from "ramda";
 import {
 	addDays,
 	addMonths,

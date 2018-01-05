@@ -1,4 +1,4 @@
-import R from "ramda";
+import * as R from "ramda";
 import genUUID from "uuid/v4";
 
 import { setProp, mergeActions, addTags, } from "../actionCreators";

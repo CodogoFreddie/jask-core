@@ -1,4 +1,4 @@
-import R from "ramda";
+import * as R from "ramda";
 
 export default ({ uuids, ids, props, tags, description, }) => {
 	const filterFunctions = [
