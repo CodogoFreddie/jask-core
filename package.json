@@ -1,6 +1,6 @@
 {
 	"name": "jask-core",
-	"version": "0.1.5",
+	"version": "0.1.6",
 	"description": "The core engine for parsing, constructing, modifying, and querying jask",
 	"main": "lib/index.js",
 	"files": [
