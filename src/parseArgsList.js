@@ -1,7 +1,7 @@
 import * as R from "ramda";
 
 const uuidRegex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
-const keyworkRegex = /(add|modify|delete|done)/;
+const keyworkRegex = /(add|modify|delete|done|start|stop)/;
 
 export const parseArgsList = args => {
 	const [filter, [keyword, ...modifiers],] = R.splitWhen(
