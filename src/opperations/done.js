@@ -9,7 +9,7 @@ export default ({ filter, }) => ({
 	opperationFilter: createFilterFunction(filter),
 	returnFilter: R.T,
 	opperationActionCreator: R.pipe(
-		R.map(({ uuid, recur, id, tags, due, ...props }) => [
+		R.map(({ uuid, recur, id, tags, due, start, stop, ...props }) => [
 			setProp({
 				uuid,
 				prop: "done",
